@@ -5,7 +5,12 @@
     <color name="colorAccent">#000000</color>
 
     <color name="colorButton">#FFFFFF</color>
+
     <color name="cardBackground">#000000</color>
     <color name="colorAppBarBackground">#bfffffff</color>
     <color name="colorAppBarText">#616161</color>
+    <color name="videoRemainingBackground">#616161</color>
+
+    <color name="colorText">#616161</color>
+    <color name="gifTitle">#424242</color>
 </resources>
