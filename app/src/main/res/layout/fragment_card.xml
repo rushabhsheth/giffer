@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/roundcorner_card"
+    android:orientation="vertical"
+    tools:context="com.giffer.giffer.VideoCardFragment"
+    tools:showIn="@layout/activity_main">
+
+        <VideoView
+            android:id="@+id/gifVideoView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.0">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Hello" />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#80c0c0c0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:weightSum="4">
+
+            <ImageView
+                android:id="@+id/UpvoteButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorButton"
+                android:padding="0dp"
+                android:src="@mipmap/upvote" />
+
+            <ImageView
+                android:id="@+id/DownvoteButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorButton"
+                android:padding="0dp"
+                android:src="@mipmap/downvote" />
+
+            <ImageView
+                android:id="@+id/ShareButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorButton"
+                android:padding="0dp"
+                android:src="@mipmap/share" />
+
+            <ImageView
+                android:id="@+id/BookmarkButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorButton"
+                android:padding="0dp"
+                android:src="@mipmap/bookmark" />
+        </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "192965074228",
+    "firebase_url": "https://giffer-31ecc.firebaseio.com",
+    "project_id": "giffer-31ecc",
+    "storage_bucket": "giffer-31ecc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192965074228:android:80cf38ca49854ea9",
+        "android_client_info": {
+          "package_name": "com.giffer.giffer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192965074228-mdbfp0lc4km61eg8kegv0rpe583s5mog.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.giffer.giffer",
+            "certificate_hash": "1933e0caa97a440cc7e8357e2cbae0fe8006bfc2"
+          }
+        },
+        {
+          "client_id": "192965074228-bcfijp3d8jjv2c0t3rrmmhkcpp3n473l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY2YnNBXaiaoI5T3waPZTK56LxTkROwnE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192965074228-bcfijp3d8jjv2c0t3rrmmhkcpp3n473l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
