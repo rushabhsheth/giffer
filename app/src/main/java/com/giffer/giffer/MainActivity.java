@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity{
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle(R.string.activity_main);
 
         // time delay to hide actionBar
         Handler h = new Handler();
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity{
                 getSupportActionBar().hide();
                 getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
             }
-        }, 3000); // e.g. 5000 milliseconds
+        }, 5000); // e.g. 5000 milliseconds
 
         //Lets Test this change 2
         //Archana made this change 3

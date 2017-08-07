@@ -4,15 +4,19 @@ package com.giffer.giffer;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import java.io.File;
@@ -66,6 +70,13 @@ public class VideoCardFragment extends Fragment {
                 gifVideoView.start();
             }
         });
+
+
+        TextView textView =(TextView) view.findViewById(R.id.originalLink);
+        textView.setClickable(true);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        String text = "<a href='http://wapo.st/2uikFTQ'> Washington Post </a>";
+        textView.setText(Html.fromHtml(text));
 
 //        gifVideoView.setOnClickListener(new View.OnClickListener() {
 //            @Override
