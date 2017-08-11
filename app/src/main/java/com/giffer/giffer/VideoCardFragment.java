@@ -1,25 +1,20 @@
 package com.giffer.giffer;
 
 
-import android.content.Context;
-import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.MediaController;
-import android.widget.TextView;
 import android.widget.VideoView;
 
-import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -28,9 +23,19 @@ import java.io.File;
 
 public class VideoCardFragment extends Fragment {
 
+    private static final String TAG = "VideoCardFragment";
+
+    protected RecyclerView mRecyclerView;
+    protected VideoCardAdapter mAdapter;
+    protected android.support.v7.widget.LinearLayoutManager mLayoutManager;
+    protected List<VideoCardExamples> mDataset = new ArrayList<>();
+
+    private boolean loading = true;
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
+
     private MediaController mMediaController;
-    private Uri uri;
     private VideoView gifVideoView;
+
 
     public VideoCardFragment() {
         //Empty constructor
@@ -39,6 +44,7 @@ public class VideoCardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initDataset();
 
     }
 
@@ -46,37 +52,43 @@ public class VideoCardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_card, container, false);
-        view.setClipToOutline(true);
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        rootView.setTag(TAG);
 
-        gifVideoView = (VideoView) view.findViewById(R.id.gifVideoView);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_recyclerview);
 
-//        uri = Uri.parse("http://i.imgur.com/p4N06EX.mp4");
+        int scrollPosition = 0;
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.scrollToPosition(scrollPosition);
 
-        String videoName = "sample4";
-        int id = getResources().getIdentifier(videoName, "raw", getActivity().getPackageName());
-        final String path = "android.resource://" + getActivity().getPackageName() + "/" + id;
-        uri = Uri.parse(path);
+        mAdapter = new VideoCardAdapter(mDataset);
+        mRecyclerView.setAdapter(mAdapter);
 
-//        mMediaController = new MediaController(getActivity());
-//        gifVideoView.setMediaController(mMediaController);
-        gifVideoView.setVideoURI(uri);
-        gifVideoView.requestFocus();
-
-        gifVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
+        {
             @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.setLooping(true);
-                gifVideoView.start();
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                if(dy > 0) //check for scroll down
+                {
+                    visibleItemCount = mLayoutManager.getChildCount();
+                    totalItemCount = mLayoutManager.getItemCount();
+                    pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+
+                    if (loading)
+                    {
+                        if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount)
+                        {
+                            loading = false;
+                            Log.v("...", "Last Item Wow !");
+                            //Do pagination.. i.e. fetch new data
+                        }
+                    }
+                }
             }
         });
 
-
-        TextView textView =(TextView) view.findViewById(R.id.originalLink);
-        textView.setClickable(true);
-        textView.setMovementMethod(LinkMovementMethod.getInstance());
-        String text = "<a href='http://wapo.st/2uikFTQ'> Washington Post </a>";
-        textView.setText(Html.fromHtml(text));
 
 //        gifVideoView.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -92,6 +104,18 @@ public class VideoCardFragment extends Fragment {
 //            }
 //        });
 
-        return view;
+        return rootView;
     }
+
+    private void initDataset() {
+
+        mDataset.add(0, new VideoCardExamples(getActivity(), "sample1", "Video 1", "g/channel 1", "1 h", "Rushabh Sheth"));
+        mDataset.add(1, new VideoCardExamples(getActivity(), "sample2", "Video 2", "g/channel 2", "2 h", "Archana Das"));
+        mDataset.add(2, new VideoCardExamples(getActivity(), "sample3", "Video 3", "g/channel 3", "3 h", "Sarthik Shah"));
+        mDataset.add(3, new VideoCardExamples(getActivity(), "sample4", "Video 4", "g/channel 4", "4 h", "Mahek Shah"));
+        mDataset.add(4, new VideoCardExamples(getActivity(), "sample5", "Video 5", "g/channel 5", "5 h", "Pratibha"));
+    }
+
 }
+
+

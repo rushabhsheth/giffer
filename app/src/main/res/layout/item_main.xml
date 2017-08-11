@@ -72,6 +72,7 @@
             android:paddingRight="20dp">
 
             <TextView
+                android:id="@+id/idChannel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/gifferChannel"
@@ -86,6 +87,7 @@
                 android:textColor="@color/colorText" />
 
             <TextView
+                android:id="@+id/timePosted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/postTime"
@@ -149,6 +151,7 @@
                 android:paddingRight="10dp">
 
                 <TextView
+                    android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/userName"
@@ -160,6 +163,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/userPostCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/userPosts"
@@ -174,6 +178,7 @@
                         android:textColor="@color/colorText" />
 
                     <TextView
+                        android:id="@+id/userUpvotesReceived"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/userUpvotes"
