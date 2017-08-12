@@ -5,8 +5,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +68,8 @@ public class VideoCardFragment extends Fragment {
 
         mAdapter = new VideoCardAdapter(mDataset);
         mRecyclerView.setAdapter(mAdapter);
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(mRecyclerView);
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
         {
@@ -88,21 +94,6 @@ public class VideoCardFragment extends Fragment {
                 }
             }
         });
-
-
-//        gifVideoView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-//                if(actionBar.isShowing()) {
-//                    actionBar.hide();
-//                    getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
-//                }
-//                else {
-//                    actionBar.show();
-//                 }
-//            }
-//        });
 
         return rootView;
     }

@@ -10,7 +10,7 @@ import android.content.res.Resources;
 
 public class VideoCardExamples {
 
-    private String gifVideoView;
+    private String gifImageView;
     private String videoTitle;
     private String videoDescription;
     private String idChannel;
@@ -22,8 +22,8 @@ public class VideoCardExamples {
     private String userUpvotesReceived;
 
 
-    public VideoCardExamples(Context context, String gifVideoView, String videoTitle, String idChannel, String timePosted, String userName){
-        this.gifVideoView = gifVideoView;
+    public VideoCardExamples(Context context, String gifImageView, String videoTitle, String idChannel, String timePosted, String userName){
+        this.gifImageView = gifImageView;
         this.videoTitle = videoTitle;
         this.idChannel = idChannel;
         this.timePosted = timePosted;
@@ -36,8 +36,8 @@ public class VideoCardExamples {
         this.userUpvotesReceived = "42k Upvotes";
     }
 
-    public String getGifVideoView() {
-        return gifVideoView;
+    public String getGifImageView() {
+        return gifImageView;
     }
 
     public String getIdChannel() {

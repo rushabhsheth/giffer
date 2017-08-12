@@ -16,8 +16,8 @@
         android:layout_weight="0.42"
         android:background="@color/videoRemainingBackground">
 
-        <VideoView
-            android:id="@+id/gifVideoView"
+        <ImageView
+            android:id="@+id/gifImageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical" />

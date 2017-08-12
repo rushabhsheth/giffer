@@ -1,9 +1,13 @@
 package com.giffer.giffer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Handler;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -11,10 +15,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import java.util.ArrayList;
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 /**
@@ -29,7 +35,7 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.View
 
     //Viewholder to hold item_main
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final VideoView gifVideoView;
+        private final ImageView gifImageView;
         private final TextView videoTitle;
         private final TextView videoDescription;
         private final TextView idChannel;
@@ -52,10 +58,30 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.View
                 @Override
                 public void onClick(View v) {
                     Log.d(TAG, "Element " + getAdapterPosition() + " clicked.");
+
+                    final Activity host = (Activity) v.getContext();
+                    final ActionBar actionBar = ((AppCompatActivity)host).getSupportActionBar();
+                    if(actionBar.isShowing()) {
+                        actionBar.hide();
+//                        host.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
+                    }
+                    else {
+                        actionBar.show();
+                        // time delay to hide actionBar
+                        Handler h = new Handler();
+                        h.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // DO DELAYED STUFF
+                                actionBar.hide();
+//                                host.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
+                            }
+                        }, 5000); // e.g. 5000 milliseconds
+                    }
                 }
             });
 
-            gifVideoView = (VideoView) v.findViewById(R.id.gifVideoView);
+            gifImageView = (ImageView) v.findViewById(R.id.gifImageView);
             videoTitle = (TextView) v.findViewById(R.id.videoTitle);
             videoDescription = (TextView) v.findViewById(R.id.videoDescription);
             idChannel = (TextView) v.findViewById(R.id.idChannel);
@@ -67,10 +93,10 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.View
             userUpvotesReceived = (TextView) v.findViewById(R.id.userUpvotesReceived);
         }
 
-        public VideoView getGifVideoView()
+        public ImageView getGifImageView()
 
         {
-            return gifVideoView;
+            return gifImageView;
         }
 
         public TextView getVideoTitle() {
@@ -151,24 +177,15 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.View
         Resources res = finalHolder.itemView.getContext().getResources();
         //        uri = Uri.parse("http://i.imgur.com/p4N06EX.mp4");
 
-        String videoName = mDataSet.get(position).getGifVideoView();
+        String imageName = mDataSet.get(position).getGifImageView();
 
-        int id = res.getIdentifier(videoName, "raw", context.getPackageName());
+        int id = res.getIdentifier(imageName, "drawable", context.getPackageName());
         final String path = "android.resource://" + context.getPackageName() + "/" + id;
         Uri uri = Uri.parse(path);
 
-//        mMediaController = new MediaController(getActivity());
-//        gifVideoView.setMediaController(mMediaController);
-        finalHolder.getGifVideoView().setVideoURI(uri);
-        finalHolder.getGifVideoView().requestFocus();
-
-        finalHolder.getGifVideoView().setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.setLooping(true);
-                finalHolder.getGifVideoView().start();
-            }
-        });
+        Glide.with(context)
+                .load(uri)
+                .into(finalHolder.getGifImageView());
 
 
         finalHolder.getOriginalLink().setClickable(true);
@@ -194,6 +211,7 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.View
         mDataSet.remove(index);
         notifyItemRemoved(index);
     }
+
 
 }
 

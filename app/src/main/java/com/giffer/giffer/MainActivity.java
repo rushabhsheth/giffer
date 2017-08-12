@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity{
             public void run() {
                 // DO DELAYED STUFF
                 getSupportActionBar().hide();
-                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
             }
         }, 5000); // e.g. 5000 milliseconds
 
