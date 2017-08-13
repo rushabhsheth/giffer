@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class VideoDbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
-    static final String DATABASE_NAME = "video.db";
+    static final String DATABASE_NAME = "news.db";
 
     public VideoDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -33,11 +33,12 @@ public class VideoDbHelper extends SQLiteOpenHelper {
                 VideoContract.VideoEntry.COLUMN_USER_NAME + " TEXT NOT NULL, " +
                 VideoContract.VideoEntry.COLUMN_USER_PHOTO + " INTEGER NOT NULL, " +
 
-                VideoContract.VideoEntry.COLUMN_VID_KEY + " INTEGER NOT NULL, " +
-                VideoContract.VideoEntry.COLUMN_VID_TITLE + " TEXT NOT NULL, " +
-                VideoContract.VideoEntry.COLUMN_VID_THUMBNAIL + " INTEGER NOT NULL, " +
-                VideoContract.VideoEntry.COLUMN_VID_VIEWS + " INTEGER NOT NULL, " +
-                VideoContract.VideoEntry.COLUMN_VID_UPVOTES + " INTEGER NOT NULL " +
+                VideoContract.VideoEntry.COLUMN_NEWS_KEY + " INTEGER NOT NULL, " +
+                VideoContract.VideoEntry.COLUMN_NEWS_IMAGE + " INTEGER NOT NULL, " +
+                VideoContract.VideoEntry.COLUMN_NEWS_TITLE + " TEXT NOT NULL, " +
+                VideoContract.VideoEntry.COLUMN_NEWS_DESCRIPTION + " TEXT NOT NULL, " +
+                VideoContract.VideoEntry.COLUMN_NEWS_VIEWS + " INTEGER NOT NULL, " +
+                VideoContract.VideoEntry.COLUMN_NEWS_UPVOTES + " INTEGER NOT NULL" +
                 " );";
 
                 sqLiteDatabase.execSQL(SQL_CREATE_VIDEO_TABLE);

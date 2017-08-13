@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Giffer</string>
     <string name="activity_main">Home</string>
+
+    <!-- News Story Card-->
     <string name="content">Content</string>
     <string name="action_settings">Settings</string>
     <string name="gifDescription">This is a sample text to show what is in the news feed. We can make it great again. This much space is enough for a whole lot of nonsense...though for real content you can click on the link and read the full article. But since you really want everything quick, here goes nothing! Have fun reader and see you.</string>
@@ -12,4 +14,16 @@
     <string name="originalLinkTag">Original Link:</string>
     <string name="userPosts">14 Posts</string>
     <string name="userUpvotes">14k Upvotes</string>
+
+    <!-- App bar Actions-->
+    <string name="action_search">Search</string>
+    <string name="action_sort">Sort</string>
+    <string name="action_add">Add</string>
+    <string name="action_profile">Profile</string>
+
+    <!-- Add News Activity-->
+    <string name="activity_addnews">Add News Story</string>
+    <string name="url_textbox">Type or paste your link here</string>
+    <string name="news_title">Title of Your News Article</string>
+    <string name="news_description">Description of the news article in 60 words or less</string>
 </resources>

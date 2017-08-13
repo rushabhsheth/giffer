@@ -61,9 +61,9 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.View
 
                     final Activity host = (Activity) v.getContext();
                     final ActionBar actionBar = ((AppCompatActivity)host).getSupportActionBar();
+
                     if(actionBar.isShowing()) {
                         actionBar.hide();
-//                        host.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
                     }
                     else {
                         actionBar.show();
@@ -78,6 +78,7 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.View
                             }
                         }, 5000); // e.g. 5000 milliseconds
                     }
+
                 }
             });
 

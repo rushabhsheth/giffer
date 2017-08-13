@@ -1,10 +1,31 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.sample.sample.MainActivity">
+    tools:context="com.giffer.giffer.MainActivity">
+
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/action_search"
+        android:icon="@mipmap/search"
+        android:title="@string/action_search"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_sort"
+        android:icon="@mipmap/sort"
+        android:title="@string/action_sort"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_add"
+        android:icon="@mipmap/add"
+        android:title="@string/action_add"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_profile"
+        android:icon="@mipmap/profile"
+        android:title="@string/action_profile"
+        app:showAsAction="always" />
+
+
 </menu>

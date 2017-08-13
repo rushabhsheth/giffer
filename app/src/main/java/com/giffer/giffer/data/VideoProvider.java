@@ -19,41 +19,41 @@ public class VideoProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private VideoDbHelper mOpenHelper;
 
-    static final int VIDEO = 100;
+    static final int NEWS = 100;
 
-    private static final SQLiteQueryBuilder sVideoByDateQueryBuilder;
+    private static final SQLiteQueryBuilder sNewsQueryBuilder;
 
     static{
-        sVideoByDateQueryBuilder = new SQLiteQueryBuilder();
+        sNewsQueryBuilder = new SQLiteQueryBuilder();
 
         //This is an inner join which looks like
         //weather INNER JOIN location ON weather.location_id = location._id
-        sVideoByDateQueryBuilder.setTables(
+        sNewsQueryBuilder.setTables(
                 VideoContract.VideoEntry.TABLE_NAME );
     }
 
 
     //video.date >= ?
-    private static final String sVideoWithStartTimeSelection =
+    private static final String sNewsWithStartTimeSelection =
             VideoContract.VideoEntry.TABLE_NAME+
                     "." + VideoContract.VideoEntry.COLUMN_TIME + " >= ? ";
 
     //video.date >= ?
-    private static final String sVideoWithStartUpVotesSelection =
+    private static final String sNewsWithStartUpVotesSelection =
             VideoContract.VideoEntry.TABLE_NAME+
-                    "." + VideoContract.VideoEntry.COLUMN_VID_UPVOTES + " >= ? ";
+                    "." + VideoContract.VideoEntry.COLUMN_NEWS_UPVOTES + " >= ? ";
 
-    private Cursor getVideosByTime (Uri uri, String[] projection, String sortOrder) {
-        long startTime = VideoContract.VideoEntry.getVideoTimeFromUri(uri);
+    private Cursor getNewsByTime (Uri uri, String[] projection, String sortOrder) {
+        long startTime = VideoContract.VideoEntry.getNewsTimeFromUri(uri);
 
         String selection;
         String[] selectionArgs;
 
 
-        selection = sVideoWithStartTimeSelection;
+        selection = sNewsWithStartTimeSelection;
         selectionArgs = new String[]{Long.toString(startTime)};
 
-        return sVideoByDateQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+        return sNewsQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
                 selection,
                 selectionArgs,
@@ -63,17 +63,17 @@ public class VideoProvider extends ContentProvider {
         );
     }
 
-    private Cursor getVideosByUpvotes (Uri uri, String[] projection, String sortOrder) {
-        long startUpvotes = VideoContract.VideoEntry.getVideoUpvotesFromUri(uri);
+    private Cursor getNewsByUpvotes (Uri uri, String[] projection, String sortOrder) {
+        long startUpvotes = VideoContract.VideoEntry.getNewsUpvotesFromUri(uri);
 
         String selection;
         String[] selectionArgs;
 
 
-        selection = sVideoWithStartUpVotesSelection;
+        selection = sNewsWithStartUpVotesSelection;
         selectionArgs = new String[]{Long.toString(startUpvotes)};
 
-        return sVideoByDateQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+        return sNewsQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
                 selection,
                 selectionArgs,
@@ -88,7 +88,7 @@ public class VideoProvider extends ContentProvider {
         final String authority = VideoContract.CONTENT_AUTHORITY;
 
         // For each type of URI you want to add, create a corresponding code.
-        matcher.addURI(authority, VideoContract.PATH_VIDEO, VIDEO);
+        matcher.addURI(authority, VideoContract.PATH_VIDEO, NEWS);
 
         return matcher;
 
@@ -107,7 +107,7 @@ public class VideoProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
 
         switch (match) {
-            case VIDEO:
+            case NEWS:
                 return VideoContract.VideoEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -122,7 +122,7 @@ public class VideoProvider extends ContentProvider {
         Cursor retCursor;
         switch (sUriMatcher.match(uri)) {
             // "weather"
-            case VIDEO: {
+            case NEWS: {
                 retCursor = mOpenHelper.getReadableDatabase().query(
                         VideoContract.VideoEntry.TABLE_NAME,
                         projection,
@@ -149,10 +149,10 @@ public class VideoProvider extends ContentProvider {
         Uri returnUri;
 
         switch (match) {
-            case VIDEO: {
+            case NEWS: {
                 long _id = db.insert(VideoContract.VideoEntry.TABLE_NAME, null, values);
                 if ( _id > 0 )
-                    returnUri = VideoContract.VideoEntry.buildVideoUri(_id);
+                    returnUri = VideoContract.VideoEntry.buildNewsUri(_id);
                 else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
@@ -172,7 +172,7 @@ public class VideoProvider extends ContentProvider {
         // this makes delete all rows return the number of rows deleted
         if ( null == selection ) selection = "1";
         switch (match) {
-            case VIDEO:
+            case NEWS:
                 rowsDeleted = db.delete(
                         VideoContract.VideoEntry.TABLE_NAME, selection, selectionArgs);
                 break;
@@ -194,7 +194,7 @@ public class VideoProvider extends ContentProvider {
         int rowsUpdated;
 
         switch (match) {
-            case VIDEO:
+            case NEWS:
                 rowsUpdated = db.update(VideoContract.VideoEntry.TABLE_NAME, values, selection,
                         selectionArgs);
                 break;
@@ -212,7 +212,7 @@ public class VideoProvider extends ContentProvider {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         switch (match) {
-            case VIDEO:
+            case NEWS:
                 db.beginTransaction();
                 int returnCount = 0;
                 try {

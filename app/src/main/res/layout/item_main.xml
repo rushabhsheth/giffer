@@ -19,12 +19,12 @@
         <ImageView
             android:id="@+id/gifImageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical" />
 
     </FrameLayout>
 
-    <!-- Hold all video information-->
+    <!-- Hold all news information-->
     <LinearLayout
         android:id="@+id/videoDetails"
         android:layout_width="match_parent"
@@ -207,7 +207,7 @@
             android:orientation="horizontal"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
-            android:weightSum="4">
+            android:weightSum="5">
 
             <ImageView
                 android:id="@+id/UpvoteButton"
@@ -228,6 +228,15 @@
                 android:src="@mipmap/downvote" />
 
             <ImageView
+                android:id="@+id/CommentButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorButton"
+                android:padding="0dp"
+                android:src="@mipmap/comment" />
+
+            <ImageView
                 android:id="@+id/ShareButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -244,6 +253,7 @@
                 android:background="@color/colorButton"
                 android:padding="0dp"
                 android:src="@mipmap/bookmark" />
+
         </LinearLayout>
 
     </LinearLayout>
