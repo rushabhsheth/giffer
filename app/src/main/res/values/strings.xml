@@ -26,4 +26,12 @@
     <string name="url_textbox">Type or paste your link here</string>
     <string name="news_title">Title of Your News Article</string>
     <string name="news_description">Description of the news article in 60 words or less</string>
+    <string name="select_channel">Select a channel</string>
+    <string name="addnews_descriptionlength">0</string>
+    <string name="addnews_descriptiontotal">/60 Words</string>
+    <string name="addnews_descriptioncount">0</string>
+    <string name="addnews_descriptiontotalcount">/300 Characters</string>
+    <string name="addnews_titletotal">/15 Words</string>
+    <string name="addnews_titletotalcount">/75 Characters</string>
+    <string name="activity_selectchannel">Select Channel</string>
 </resources>

@@ -1,9 +1,8 @@
-package com.giffer.giffer;
+package com.giffer.giffer.NewsCard;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -17,9 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
+import com.giffer.giffer.R;
 
 import java.util.List;
 

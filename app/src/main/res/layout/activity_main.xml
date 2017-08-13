@@ -16,7 +16,8 @@
         android:background="@color/colorAppBarBackground"
         app:theme="@style/AppTheme.TransparentActionBar"
         app:popupTheme="@style/AppTheme.PopupOverlay"
-        android:minHeight="?attr/actionBarSize" />
+        android:minHeight="?attr/actionBarSize"
+        android:paddingRight="@dimen/toolbar_paddingRight"/>
 
 
 </RelativeLayout>

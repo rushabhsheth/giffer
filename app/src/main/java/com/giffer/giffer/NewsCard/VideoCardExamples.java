@@ -1,4 +1,4 @@
-package com.giffer.giffer;
+package com.giffer.giffer.NewsCard;
 
 
 import android.content.Context;

@@ -32,6 +32,16 @@
                 android:value="com.giffer.giffer.MainActivity" />
         </activity>
 
+        <activity android:name=".SelectChannelActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".AddNewsActivity" >
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.giffer.giffer.AddNewsActivity" />
+        </activity>
+
     </application>
 
 </manifest>
