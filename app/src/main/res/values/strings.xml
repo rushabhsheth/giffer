@@ -34,4 +34,15 @@
     <string name="addnews_titletotal">/15 Words</string>
     <string name="addnews_titletotalcount">/75 Characters</string>
     <string name="activity_selectchannel">Select Channel</string>
+
+    <!-- Facebook login-->
+    <string name="facebook_application_id" translatable="false">560389907685160</string>
+    <string name="fb_login_protocol_scheme">fb560389907685160</string>
+
+    <string name="sign_out">Sign Out</string>
+    <string name="no_internet_connection">No Internet. Please connect to the internet and try again!</string>
+    <string name="unknown_error">Something went wrong! Please try again.</string>
+    <string name="unknown_sign_in_response">Unknown sign in response!</string>
+    <string name="activity_profilename">Your Profile</string>
+
 </resources>
