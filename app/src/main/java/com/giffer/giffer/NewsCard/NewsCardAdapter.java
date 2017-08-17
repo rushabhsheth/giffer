@@ -26,11 +26,11 @@ import java.util.List;
  * Created by archanaarunkumar on 8/9/17.
  */
 
-public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.ViewHolder> {
+public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHolder> {
 
-    private static final String TAG = "VideoCardAdapter";
+    private static final String TAG = "NewsCardAdapter";
 
-    private List<VideoCardExamples> mDataSet;
+    private List<NewsCard> mDataSet;
 
     //Viewholder to hold item_main
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -153,7 +153,7 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.View
     }
 
     //Constructor
-    public VideoCardAdapter(List<VideoCardExamples> dataSet) {
+    public NewsCardAdapter(List<NewsCard> dataSet) {
         mDataSet = dataSet;
     }
 
@@ -177,22 +177,74 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.View
         Resources res = finalHolder.itemView.getContext().getResources();
         //        uri = Uri.parse("http://i.imgur.com/p4N06EX.mp4");
 
-        String imageName = mDataSet.get(position).getGifImageView();
+        NewsCard newsCard = mDataSet.get(position);
 
-        int id = res.getIdentifier(imageName, "drawable", context.getPackageName());
-        final String path = "android.resource://" + context.getPackageName() + "/" + id;
-        Uri uri = Uri.parse(path);
-
-        Glide.with(context)
-                .load(uri)
-                .into(finalHolder.getGifImageView());
-
+        String imageUri = newsCard.getNewsCardImageUri();
+        if (imageUri != null) {
+            Uri uri = Uri.parse(imageUri);
+            Glide.with(context)
+                    .load(uri)
+                    .into(finalHolder.getGifImageView());
+        }
 
         finalHolder.getOriginalLink().setClickable(true);
         finalHolder.getOriginalLink().setMovementMethod(LinkMovementMethod.getInstance());
-        String text = "<a href='http://wapo.st/2uikFTQ'> Washington Post </a>";
-        //noinspection deprecation
-        finalHolder.getOriginalLink().setText(Html.fromHtml(text));
+
+        if(newsCard.getOriginalLink()!=null){
+            String originalLink = newsCard.getOriginalLink();
+            finalHolder.getOriginalLink().setText(Html.fromHtml(originalLink));
+        }
+        else {
+            String text = "<a href='http://wapo.st/2uikFTQ'> Washington Post </a>";
+            //noinspection deprecation
+            finalHolder.getOriginalLink().setText(Html.fromHtml(text));
+        }
+
+        String videoTitle = newsCard.getVideoTitle();
+        if(videoTitle!=null){
+            finalHolder.getVideoTitle().setText(videoTitle);
+        }
+
+        String videoDescription = newsCard.getVideoDescription();
+        if(videoDescription!=null){
+            finalHolder.getVideoDescription().setText(videoDescription);
+        }
+
+        String channelId = newsCard.getIdChannel();
+        if(channelId != null){
+            finalHolder.getIdChannel().setText(channelId);
+        }
+
+        String timePosted = newsCard.getTimePosted();
+        if(timePosted != null){
+            finalHolder.getTimePosted().setText(timePosted);
+        }
+
+        String userName = newsCard.getUserName();
+        if(userName != null){
+            finalHolder.getUserName().setText(userName);
+        }
+
+        String userProfileImage = newsCard.getProfile_image();
+        if(userProfileImage!=null){
+            Uri uri = Uri.parse(userProfileImage);
+            Glide.with(context)
+                    .load(uri)
+                    .into(finalHolder.getProfile_image());
+        }
+
+        int userPosts = newsCard.getUserPostCount();
+        Log.d(TAG,String.valueOf(userPosts));
+        if(userPosts != 404){
+
+            finalHolder.getUserPostCount().setText(String.valueOf(userPosts));
+        }
+
+        int userUpvotes = newsCard.getUserUpvotesReceived();
+        if(userUpvotes!=404){
+            Log.d(TAG, String.valueOf(userUpvotes));
+            finalHolder.getUserUpvotesReceived().setText(String.valueOf(userUpvotes));
+        }
 
     }
 
@@ -202,7 +254,7 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.View
         return mDataSet.size();
     }
 
-    public void addItem(VideoCardExamples dataObj, int index) {
+    public void addItem(NewsCard dataObj, int index) {
         mDataSet.add(dataObj);
         notifyItemInserted(index);
     }

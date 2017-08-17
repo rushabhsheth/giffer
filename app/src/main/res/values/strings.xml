@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Giffer</string>
     <string name="activity_main">Home</string>
+    <string name="content_authority">com.giffer.giffer</string>
 
     <!-- News Story Card-->
     <string name="content">Content</string>

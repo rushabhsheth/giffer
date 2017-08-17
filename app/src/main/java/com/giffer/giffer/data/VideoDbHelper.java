@@ -28,20 +28,28 @@ public class VideoDbHelper extends SQLiteOpenHelper {
                 // should be sorted accordingly.
                 VideoContract.VideoEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
 
-                VideoContract.VideoEntry.COLUMN_TIME + " INTEGER NOT NULL, " +
-                VideoContract.VideoEntry.COLUMN_USER_ID + " INTEGER NOT NULL, " +
-                VideoContract.VideoEntry.COLUMN_USER_NAME + " TEXT NOT NULL, " +
-                VideoContract.VideoEntry.COLUMN_USER_PHOTO + " INTEGER NOT NULL, " +
-
-                VideoContract.VideoEntry.COLUMN_NEWS_KEY + " INTEGER NOT NULL, " +
-                VideoContract.VideoEntry.COLUMN_NEWS_IMAGE + " INTEGER NOT NULL, " +
+                VideoContract.VideoEntry.COLUMN_NEWS_KEY + " TEXT NOT NULL, " +
+                VideoContract.VideoEntry.COLUMN_NEWS_IMAGE_URI + " TEXT NOT NULL, " +
                 VideoContract.VideoEntry.COLUMN_NEWS_TITLE + " TEXT NOT NULL, " +
                 VideoContract.VideoEntry.COLUMN_NEWS_DESCRIPTION + " TEXT NOT NULL, " +
-                VideoContract.VideoEntry.COLUMN_NEWS_VIEWS + " INTEGER NOT NULL, " +
-                VideoContract.VideoEntry.COLUMN_NEWS_UPVOTES + " INTEGER NOT NULL" +
+                VideoContract.VideoEntry.COLUMN_NEWS_CHANNEL + " TEXT NOT NULL, " +
+                VideoContract.VideoEntry.COLUMN_NEWS_TIME + " TEXT NOT NULL, " +
+                VideoContract.VideoEntry.COLUMN_NEWS_ORIGINAL_LINK + " TEXT NOT NULL, " +
+                VideoContract.VideoEntry.COLUMN_NEWS_VIEWS + " INTEGER, " +
+                VideoContract.VideoEntry.COLUMN_NEWS_UPVOTES + " INTEGER, " +
+                VideoContract.VideoEntry.COLUMN_NEWS_DOWNVOTES + " INTEGER, " +
+                VideoContract.VideoEntry.COLUMN_NEWS_COMMENTCOUNT + " INTEGER, " +
+
+
+                VideoContract.VideoEntry.COLUMN_USER_ID + " TEXT NOT NULL, " +
+                VideoContract.VideoEntry.COLUMN_USER_PROFILEIMAGE + " TEXT NOT NULL, " +
+                VideoContract.VideoEntry.COLUMN_USER_NAME + " TEXT NOT NULL, " +
+                VideoContract.VideoEntry.COLUMN_USER_POSTCOUNT + " INTEGER, " +
+                VideoContract.VideoEntry.COLUMN_USER_UPVOTESRECEIVED + " INTEGER " +
                 " );";
 
                 sqLiteDatabase.execSQL(SQL_CREATE_VIDEO_TABLE);
+
     }
 
     @Override

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/roundcorner_card"
     android:orientation="vertical"
-    tools:context="com.giffer.giffer.NewsCard.VideoCardFragment"
+    tools:context="com.giffer.giffer.NewsCard.NewsCardFragment"
     tools:showIn="@layout/activity_main">
 
     <!--View for holding Video-->

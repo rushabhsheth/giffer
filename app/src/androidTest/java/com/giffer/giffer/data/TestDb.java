@@ -1,5 +1,6 @@
 package com.giffer.giffer.data;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
@@ -64,14 +65,26 @@ public class TestDb extends AndroidTestCase {
         // Build a HashSet of all of the column names we want to look for
         final HashSet<String> newsColumnHashSet = new HashSet<String>();
         newsColumnHashSet.add(VideoContract.VideoEntry._ID);
-        newsColumnHashSet.add(VideoContract.VideoEntry.COLUMN_NEWS_IMAGE);
+        newsColumnHashSet.add(VideoContract.VideoEntry.COLUMN_NEWS_KEY);
+        newsColumnHashSet.add(VideoContract.VideoEntry.COLUMN_NEWS_IMAGE_URI);
         newsColumnHashSet.add(VideoContract.VideoEntry.COLUMN_NEWS_TITLE);
         newsColumnHashSet.add(VideoContract.VideoEntry.COLUMN_NEWS_DESCRIPTION);
+        newsColumnHashSet.add(VideoContract.VideoEntry.COLUMN_NEWS_CHANNEL);
+        newsColumnHashSet.add(VideoContract.VideoEntry.COLUMN_NEWS_TIME);
+        newsColumnHashSet.add(VideoContract.VideoEntry.COLUMN_NEWS_ORIGINAL_LINK);
+        newsColumnHashSet.add(VideoContract.VideoEntry.COLUMN_NEWS_VIEWS);
+        newsColumnHashSet.add(VideoContract.VideoEntry.COLUMN_NEWS_UPVOTES);
+        newsColumnHashSet.add(VideoContract.VideoEntry.COLUMN_NEWS_DOWNVOTES);
+        newsColumnHashSet.add(VideoContract.VideoEntry.COLUMN_NEWS_COMMENTCOUNT);
 
+        newsColumnHashSet.add(VideoContract.VideoEntry.COLUMN_USER_ID);
+        newsColumnHashSet.add(VideoContract.VideoEntry.COLUMN_USER_PROFILEIMAGE);
         newsColumnHashSet.add(VideoContract.VideoEntry.COLUMN_USER_NAME);
-        newsColumnHashSet.add(VideoContract.VideoEntry.COLUMN_USER_PHOTO);
+        newsColumnHashSet.add(VideoContract.VideoEntry.COLUMN_USER_POSTCOUNT);
+        newsColumnHashSet.add(VideoContract.VideoEntry.COLUMN_USER_UPVOTESRECEIVED);
 
-        int columnNameIndex = c.getColumnIndex("user_name");
+
+        int columnNameIndex = c.getColumnIndex("name");
         do {
             String columnName = c.getString(columnNameIndex);
             newsColumnHashSet.remove(columnName);
@@ -83,4 +96,49 @@ public class TestDb extends AndroidTestCase {
                 newsColumnHashSet.isEmpty());
         db.close();
     }
+
+
+    public void testWeatherTable() {
+        // First step: Get reference to writable database
+        // If there's an error in those massive SQL table creation Strings,
+        // errors will be thrown here when you try to get a writable database.
+        VideoDbHelper dbHelper = new VideoDbHelper(mContext);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Second Step (Weather): Create weather values
+        ContentValues newsValues = TestUtilities.createNewsValues();
+
+        // Third Step (Weather): Insert ContentValues into database and get a row ID back
+        long newsRowId = db.insert(VideoContract.VideoEntry.TABLE_NAME, null, newsValues);
+        assertTrue(newsRowId != -1);
+
+        // Fourth Step: Query the database and receive a Cursor back
+        // A cursor is your primary interface to the query results.
+        Cursor newsCursor = db.query(
+                VideoContract.VideoEntry.TABLE_NAME,  // Table to Query
+                null, // leaving "columns" null just returns all the columns.
+                null, // cols for "where" clause
+                null, // values for "where" clause
+                null, // columns to group by
+                null, // columns to filter by row groups
+                null  // sort order
+        );
+
+        // Move the cursor to the first valid database row and check to see if we have any rows
+        assertTrue( "Error: No Records returned from location query", newsCursor.moveToFirst() );
+
+        // Fifth Step: Validate the location Query
+        TestUtilities.validateCurrentRecord("testInsertReadDb videoEntry failed to validate",
+                newsCursor, newsValues);
+
+        // Move the cursor to demonstrate that there is only one record in the database
+        assertFalse( "Error: More than one record returned from news query",
+                newsCursor.moveToNext() );
+
+        // Sixth Step: Close cursor and database
+        newsCursor.close();
+        dbHelper.close();
+    }
+
+
 }

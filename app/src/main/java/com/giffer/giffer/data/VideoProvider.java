@@ -36,7 +36,7 @@ public class VideoProvider extends ContentProvider {
     //video.date >= ?
     private static final String sNewsWithStartTimeSelection =
             VideoContract.VideoEntry.TABLE_NAME+
-                    "." + VideoContract.VideoEntry.COLUMN_TIME + " >= ? ";
+                    "." + VideoContract.VideoEntry.COLUMN_NEWS_TIME + " >= ? ";
 
     //video.date >= ?
     private static final String sNewsWithStartUpVotesSelection =

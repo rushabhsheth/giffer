@@ -58,6 +58,13 @@
                 android:value="com.giffer.giffer.AddNewsActivity" />
         </activity>
 
+
+        <provider
+            android:authorities="@string/content_authority"
+            android:name=".data.VideoProvider"
+            android:exported="false"
+            android:syncable="true" />
+
     </application>
 
 </manifest>

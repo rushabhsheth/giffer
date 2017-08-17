@@ -1,11 +1,13 @@
 package com.giffer.giffer;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,19 +16,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.giffer.giffer.NewsCard.VideoCardFragment;
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
+import com.giffer.giffer.NewsCard.NewsCard;
+import com.giffer.giffer.NewsCard.NewsCardAdapter;
+import com.giffer.giffer.NewsCard.NewsCardDbManager;
+import com.giffer.giffer.NewsCard.NewsCardFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,6 +46,7 @@ public class MainActivity extends AppCompatActivity{
     public static final int RC_PROFILE = 2;
     public static final int RC_SIGN_IN_ADDNEWS = 3;
 
+
     //Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -48,7 +56,11 @@ public class MainActivity extends AppCompatActivity{
     private ChildEventListener mNewsChildEventListener;
     private FirebaseStorage mFirebaseStorage;
     private StorageReference mNewsPhotosStorageReference;
-    private FirebaseRemoteConfig mFirebaseRemoteConfig;
+
+    private NewsCard mNewsCard;
+    NewsCardFragment mNewsCardFragment;
+    NewsCardDbManager mNewsCardDbManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,15 +71,36 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle(R.string.activity_main);
 
+        mNewsCardFragment = (NewsCardFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_main);
+        if(mNewsCardFragment == null) {
+            mNewsCardFragment = new NewsCardFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.fragment_main, mNewsCardFragment);
+            ft.commit();
+        }
+
         // Initialize Firebase components
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseStorage = FirebaseStorage.getInstance();
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+
 
         mNewsDatabaseReference = mFirebaseDatabase.getReference().child("news");
         mNewsPhotosStorageReference = mFirebaseStorage.getReference().child("news_photos");
+
         mUser = null;
+        mNewsCard = new NewsCard();
+
+        //Comment out sample values when using actual data
+        mNewsCardDbManager = new NewsCardDbManager(this);
+        mNewsCardDbManager.delete_all();
+        mNewsCardDbManager.insertNewsCard(mNewsCardDbManager.mNewsCardSample);
+        mNewsCardDbManager.bulkInsertNewsCard(mNewsCardDbManager.mNewsCardList);
+
+        List<NewsCard> fecthNewsCardList = mNewsCardDbManager.fetch_all_data();
+        for(NewsCard newsCard: fecthNewsCardList) {
+            mNewsCardFragment.addNewsCard(newsCard);
+        }
 
         // time delay to hide actionBar
         Handler h = new Handler();
@@ -86,16 +119,14 @@ public class MainActivity extends AppCompatActivity{
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 mUser = firebaseAuth.getCurrentUser();
                 if (mUser != null) {
-                    // User is signed in
-//                    onSignedInInitialize(user.getDisplayName());
+
                 } else {
-                    // User is signed out
-//                    onSignedOutCleanup();
-//                    startLoginFlow();
+
                 }
             }
         };
 
+        attachDatabaseReadListener();
     }
 
     public void startLoginFlow (int intId){
@@ -105,8 +136,7 @@ public class MainActivity extends AppCompatActivity{
 
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 facebookIdp,
-                new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
-                new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build()
+                new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()
         );
 
         // User is signed out
@@ -157,7 +187,7 @@ public class MainActivity extends AppCompatActivity{
                     String mSignOut = data.getExtras().getString("SignOut");
                     Log.d(TAG, "Intent with RC_Profile. Sign Out? " + mSignOut);
                     if (mUser !=null){
-                        AuthUI.getInstance().signOut(this);
+                        mFirebaseAuth.signOut();
                         Toast.makeText(this, "Signed out", Toast.LENGTH_LONG).show();
                     }
                 }
@@ -178,6 +208,7 @@ public class MainActivity extends AppCompatActivity{
         if (mAuthStateListener != null) {
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
         }
+        detachDatabaseReadListener();
     }
 
 
@@ -215,7 +246,9 @@ public class MainActivity extends AppCompatActivity{
 
     public void startAddActivity() {
         if(mUser != null) {
+            setupNewsCardUserDetails();
             Intent intent = new Intent(this, AddNewsActivity.class);
+            intent.putExtra("NewsCard",mNewsCard);
             startActivity(intent);
         }
         else {
@@ -230,6 +263,47 @@ public class MainActivity extends AppCompatActivity{
             startActivityForResult(intent, RC_PROFILE);
 
     }
+
+    private void setupNewsCardUserDetails(){
+        // Name, email address, and profile photo Url
+        String name = mUser.getDisplayName();
+        Uri photoUrl = mUser.getPhotoUrl();
+        
+        String uid = mUser.getUid();
+
+        mNewsCard.setUserId(uid);
+        mNewsCard.setUserName(name);
+        mNewsCard.setProfile_image(photoUrl.toString());
+
+    }
+
+    private void attachDatabaseReadListener() {
+//        if (mNewsChildEventListener == null) {
+//            mNewsChildEventListener = new ChildEventListener() {
+//                @Override
+//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                    NewsCard newsCard = dataSnapshot.getValue(NewsCard.class);
+//                    mNewsCardFragment.addNewsCard(newsCard);
+//
+//                }
+//
+//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+//                public void onChildRemoved(DataSnapshot dataSnapshot) {}
+//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+//                public void onCancelled(DatabaseError databaseError) {}
+//            };
+//            mNewsDatabaseReference.addChildEventListener(mNewsChildEventListener);
+//        }
+    }
+
+
+    private void detachDatabaseReadListener() {
+        if (mNewsChildEventListener != null) {
+            mNewsDatabaseReference.removeEventListener(mNewsChildEventListener);
+            mNewsChildEventListener = null;
+        }
+    }
+
 
 
 }
