@@ -34,6 +34,12 @@ public class NewsCard  implements Serializable{
     private int userPostCount;
     private int userUpvotesReceived;
 
+    boolean mUpvotePressed;
+    boolean mDownvotePressed;
+    boolean mCommentPressed;
+    boolean mSharePressed;
+    boolean mBookmarkPressed;
+
     //Empty Constructor
     public NewsCard(){
         this.newsCardKey = "random";
@@ -54,6 +60,12 @@ public class NewsCard  implements Serializable{
         this.userName = null;
         this.userPostCount = 404;
         this.userUpvotesReceived = 404;
+
+        mUpvotePressed = false;
+        mDownvotePressed = false;
+        mCommentPressed = false;
+        mSharePressed = false;
+        mBookmarkPressed = false;
 
     }
 
@@ -142,6 +154,25 @@ public class NewsCard  implements Serializable{
         return newsCardImageUri;
     }
 
+    public boolean getUpvotePressed(){
+        return mUpvotePressed;
+    }
+
+    public boolean getDownvotePressed(){
+        return mDownvotePressed;
+    }
+
+    public boolean getCommentPressed(){
+        return mCommentPressed;
+    }
+
+    public boolean getSharePressed(){
+        return mSharePressed;
+    }
+
+    public boolean getBookmarkPressed(){
+        return mBookmarkPressed;
+    }
 
     //Setter functions
     public void setNewsCardKey (String newsCardKey){
@@ -207,5 +238,25 @@ public class NewsCard  implements Serializable{
     public void setNewsCardImageUri(String newsCardImageUri){
 //        Log.d(TAG, newsCardImageUri);
         this.newsCardImageUri = newsCardImageUri;
+    }
+
+    public void setUpvotePressed(boolean pressed){
+        this.mUpvotePressed = pressed;
+    }
+
+    public void setDownvotePressed(boolean pressed){
+        this.mDownvotePressed = pressed;
+    }
+
+    public void setCommentPressed(boolean pressed){
+        this.mCommentPressed = pressed;
+    }
+
+    public void setSharePressed(boolean pressed){
+        this.mSharePressed = pressed;
+    }
+
+    public void setBookmarkPressed(boolean pressed){
+        this.mBookmarkPressed = pressed;
     }
 }

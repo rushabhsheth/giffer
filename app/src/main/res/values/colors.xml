@@ -14,4 +14,6 @@
     <color name="colorText">#757575</color>
     <color name="gifTitle">#424242</color>
     <color name="gifDescription">#616161</color>
+
+    <color name="colorAppRed">#D80027</color>
 </resources>

@@ -81,8 +81,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="5dp"
                 android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:text="@string/BetweenChannelTime"
                 android:textColor="@color/colorText" />
 
@@ -172,8 +172,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingRight="5dp"
                         android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:text="@string/BetweenChannelTime"
                         android:textColor="@color/colorText" />
 
@@ -202,56 +202,116 @@
         <LinearLayout
             android:id="@+id/buttonBottom"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:background="@color/colorPrimary"
             android:orientation="horizontal"
             android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:paddingTop="5dp"
-            android:weightSum="5">
+            android:weightSum="100">
 
-            <ImageView
-                android:id="@+id/UpvoteButton"
+            <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/colorButton"
-                android:padding="0dp"
-                android:src="@mipmap/upvote" />
+                android:layout_height="match_parent"
+                android:layout_weight="20"
+                android:background="@color/colorPrimary"
+                >
 
-            <ImageView
+                <ImageButton
+                    android:id="@+id/UpvoteButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:adjustViewBounds="true"
+                    android:background="@color/colorPrimary"
+                    android:padding="0dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/upvote" />
+
+                <TextView
+                    android:id="@+id/newsUpvotes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/newsUpvotes"
+                    android:textColor="@color/colorPrimary"
+                    android:background="@drawable/roundcorner_card_textbox"
+                    android:textSize="10sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:includeFontPadding="false"
+                    android:padding="1dp"
+                    />
+            </RelativeLayout>
+
+            <ImageButton
                 android:id="@+id/DownvoteButton"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/colorButton"
+                android:layout_height="match_parent"
+                android:layout_gravity="left|center_vertical"
+                android:layout_weight="20"
+                android:adjustViewBounds="true"
+                android:background="@color/colorPrimary"
                 android:padding="0dp"
+                android:scaleType="fitCenter"
                 android:src="@mipmap/downvote" />
 
-            <ImageView
-                android:id="@+id/CommentButton"
+            <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/colorButton"
-                android:padding="0dp"
-                android:src="@mipmap/comment" />
+                android:layout_height="match_parent"
+                android:layout_weight="20"
+                android:background="@color/colorPrimary"
+                >
 
-            <ImageView
+                <ImageButton
+                    android:id="@+id/CommentButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:adjustViewBounds="true"
+                    android:background="@color/colorPrimary"
+                    android:padding="0dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/comment" />
+
+                <TextView
+                    android:id="@+id/newsComments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/newsComments"
+                    android:textColor="@color/colorPrimary"
+                    android:background="@drawable/roundcorner_card_textbox"
+                    android:textSize="10sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:includeFontPadding="false"
+                    android:padding="1dp"
+                    />
+
+            </RelativeLayout>
+
+            <ImageButton
                 android:id="@+id/ShareButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="20"
+                android:adjustViewBounds="true"
                 android:background="@color/colorButton"
                 android:padding="0dp"
+                android:scaleType="fitCenter"
                 android:src="@mipmap/share" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/BookmarkButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/colorButton"
+                android:layout_weight="20"
+                android:adjustViewBounds="true"
+                android:background="@color/colorPrimary"
                 android:padding="0dp"
+                android:scaleType="fitCenter"
                 android:src="@mipmap/bookmark" />
 
         </LinearLayout>

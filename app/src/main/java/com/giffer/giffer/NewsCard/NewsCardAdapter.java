@@ -3,6 +3,7 @@ package com.giffer.giffer.NewsCard;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -14,8 +15,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 import com.giffer.giffer.R;
@@ -31,6 +37,7 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
     private static final String TAG = "NewsCardAdapter";
 
     private List<NewsCard> mDataSet;
+    private int lastPosition = -1;
 
     //Viewholder to hold item_main
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -44,6 +51,12 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
         private final TextView userName;
         private final TextView userPostCount;
         private final TextView userUpvotesReceived;
+
+        private final ImageButton mUpvoteButton;
+        private final ImageButton mDownvoteButton;
+        private final ImageButton mCommentButton;
+        private final ImageButton mShareButton;
+        private final ImageButton mBookmarkButton;
 
 
         public ViewHolder(View v) {
@@ -91,6 +104,12 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
             userName = (TextView) v.findViewById(R.id.userName);
             userPostCount = (TextView) v.findViewById(R.id.userPostCount);
             userUpvotesReceived = (TextView) v.findViewById(R.id.userUpvotesReceived);
+
+            mUpvoteButton = (ImageButton) v.findViewById(R.id.UpvoteButton);
+            mDownvoteButton = (ImageButton) v.findViewById(R.id.DownvoteButton);
+            mCommentButton = (ImageButton) v.findViewById(R.id.CommentButton);
+            mShareButton = (ImageButton) v.findViewById(R.id.ShareButton);
+            mBookmarkButton = (ImageButton) v.findViewById(R.id.BookmarkButton);
         }
 
         public ImageView getGifImageView()
@@ -150,6 +169,27 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
         {
             return userUpvotesReceived;
         }
+
+        public ImageButton getUpvoteButton (){
+            return mUpvoteButton;
+        }
+
+        public ImageButton getDownvoteButton(){
+            return mDownvoteButton;
+        }
+
+        public ImageButton getCommentButton(){
+            return mCommentButton;
+        }
+
+        public ImageButton getShareButton(){
+            return mShareButton;
+        }
+
+        public ImageButton getBookmarkButton(){
+            return mBookmarkButton;
+        }
+
     }
 
     //Constructor
@@ -175,9 +215,8 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
         final ViewHolder finalHolder = viewHolder;
         Context context = finalHolder.itemView.getContext();
         Resources res = finalHolder.itemView.getContext().getResources();
-        //        uri = Uri.parse("http://i.imgur.com/p4N06EX.mp4");
 
-        NewsCard newsCard = mDataSet.get(position);
+        final NewsCard newsCard = mDataSet.get(position);
 
         String imageUri = newsCard.getNewsCardImageUri();
         if (imageUri != null) {
@@ -234,7 +273,7 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
         }
 
         int userPosts = newsCard.getUserPostCount();
-        Log.d(TAG,String.valueOf(userPosts));
+    //    Log.d(TAG,String.valueOf(userPosts));
         if(userPosts != 404){
 
             finalHolder.getUserPostCount().setText(String.valueOf(userPosts));
@@ -242,9 +281,81 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
 
         int userUpvotes = newsCard.getUserUpvotesReceived();
         if(userUpvotes!=404){
-            Log.d(TAG, String.valueOf(userUpvotes));
+     //       Log.d(TAG, String.valueOf(userUpvotes));
             finalHolder.getUserUpvotesReceived().setText(String.valueOf(userUpvotes));
         }
+
+
+        finalHolder.getUpvoteButton().setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        boolean upvotePressed = newsCard.getUpvotePressed();
+                        if (!upvotePressed) {
+                            finalHolder.getUpvoteButton().setImageResource(R.mipmap.uparrow_pressed);
+                            newsCard.setUpvotePressed(true);
+                        }
+                        else {
+                            finalHolder.getUpvoteButton().setImageResource(R.mipmap.upvote);
+                            newsCard.setUpvotePressed(false);
+                        }
+                    }
+                }
+        );
+
+        finalHolder.getDownvoteButton().setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        boolean downvotePressed = newsCard.getDownvotePressed();
+                        if (!downvotePressed) {
+                            finalHolder.getDownvoteButton().setImageResource(R.mipmap.downarrow_pressed);
+                            newsCard.setDownvotePressed(true);
+                        }
+                        else {
+                            finalHolder.getDownvoteButton().setImageResource(R.mipmap.downvote);
+                            newsCard.setDownvotePressed(false);
+                        }
+                    }
+                }
+        );
+
+        finalHolder.getShareButton().setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        boolean sharePressed = newsCard.getSharePressed();
+                        if (!sharePressed) {
+                            finalHolder.getShareButton().setImageResource(R.mipmap.share_pressed);
+                            newsCard.setSharePressed(true);
+                        }
+                        else {
+                            finalHolder.getShareButton().setImageResource(R.mipmap.share);
+                            newsCard.setSharePressed(false);
+                        }
+                    }
+                }
+        );
+
+        finalHolder.getBookmarkButton().setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        boolean bookmarkPressed = newsCard.getBookmarkPressed();
+                        if (!bookmarkPressed) {
+                            finalHolder.getBookmarkButton().setImageResource(R.mipmap.bookmark_pressed);
+                            newsCard.setBookmarkPressed(true);
+                        }
+                        else {
+                            finalHolder.getBookmarkButton().setImageResource(R.mipmap.bookmark);
+                            newsCard.setBookmarkPressed(false);
+                        }
+                    }
+                }
+        );
+
+
+        // setSlideUpAnimation(context, finalHolder.itemView, position);
 
     }
 
@@ -264,6 +375,28 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
         notifyItemRemoved(index);
     }
 
+
+    @Override
+    public void onViewDetachedFromWindow(ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
+    }
+
+//    private void setSlideUpAnimation(Context context, View viewToAnimate, int position) {
+//        // If the bound view wasn't previously displayed on screen, it's animated
+//        if (position > lastPosition) {
+//            Animation animation = AnimationUtils.loadAnimation(context,R.anim.item_animation_slide_up);
+//            viewToAnimate.startAnimation(animation);
+//            lastPosition = position;
+//        }
+//        else
+//        {
+//            Animation animation = AnimationUtils.loadAnimation(context,R.anim.item_animation_slide_down);
+//            viewToAnimate.startAnimation(animation);
+//            lastPosition = position;
+//        }
+//    }
+//
 
 }
 

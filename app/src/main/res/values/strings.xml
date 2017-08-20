@@ -45,5 +45,7 @@
     <string name="unknown_error">Something went wrong! Please try again.</string>
     <string name="unknown_sign_in_response">Unknown sign in response!</string>
     <string name="activity_profilename">Your Profile</string>
+    <string name="newsUpvotes">2801</string>
+    <string name="newsComments">42</string>
 
 </resources>

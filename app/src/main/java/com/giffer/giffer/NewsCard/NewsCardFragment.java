@@ -5,15 +5,19 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import com.giffer.giffer.Animation.OverlapDecoration;
 import com.giffer.giffer.R;
 
 import java.util.ArrayList;
@@ -58,13 +62,15 @@ public class NewsCardFragment extends Fragment {
 
         int scrollPosition = 0;
         mLayoutManager = new LinearLayoutManager(getActivity());
+
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.scrollToPosition(scrollPosition);
 
         mNewsCardAdapter = new NewsCardAdapter(mNewsCardData);
         mRecyclerView.setAdapter(mNewsCardAdapter);
-        SnapHelper snapHelper = new LinearSnapHelper();
+        SnapHelper snapHelper = new PagerSnapHelper();    // LinearSnapHelper();
         snapHelper.attachToRecyclerView(mRecyclerView);
+
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
         {
@@ -107,6 +113,7 @@ public class NewsCardFragment extends Fragment {
         mNewsCardData.add(newsCard);
         mNewsCardAdapter.notifyItemInserted(mNewsCardData.size() - 1);
     }
+
 }
 
 
