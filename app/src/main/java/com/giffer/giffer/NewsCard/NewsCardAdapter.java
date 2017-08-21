@@ -2,6 +2,7 @@ package com.giffer.giffer.NewsCard;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.media.Image;
 import android.net.Uri;
@@ -24,7 +25,10 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
+import com.giffer.giffer.AddNewsActivity;
 import com.giffer.giffer.R;
+import com.giffer.giffer.SelectChannelActivity;
+import com.giffer.giffer.WebViewActivity;
 
 import java.util.List;
 
@@ -38,6 +42,10 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
 
     private List<NewsCard> mDataSet;
     private int lastPosition = -1;
+
+    Context mContext;
+    String mOriginalLink;
+    String mOriginalLinkText;
 
     //Viewholder to hold item_main
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -193,8 +201,9 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
     }
 
     //Constructor
-    public NewsCardAdapter(List<NewsCard> dataSet) {
-        mDataSet = dataSet;
+    public NewsCardAdapter(Context context,List<NewsCard> dataSet) {
+        this.mDataSet = dataSet;
+        this.mContext = context;
     }
 
     // Create new views (invoked by the layout manager)
@@ -226,18 +235,34 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
                     .into(finalHolder.getGifImageView());
         }
 
-        finalHolder.getOriginalLink().setClickable(true);
-        finalHolder.getOriginalLink().setMovementMethod(LinkMovementMethod.getInstance());
+//        finalHolder.getOriginalLink().setClickable(true);
+//        finalHolder.getOriginalLink().setMovementMethod(LinkMovementMethod.getInstance());
 
         if(newsCard.getOriginalLink()!=null){
-            String originalLink = newsCard.getOriginalLink();
-            finalHolder.getOriginalLink().setText(Html.fromHtml(originalLink));
+            mOriginalLink = newsCard.getOriginalLink();
+            mOriginalLinkText = "Washington Post";
+            //noinspection deprecation
+            finalHolder.getOriginalLink().setText(mOriginalLinkText);
         }
         else {
-            String text = "<a href='http://wapo.st/2uikFTQ'> Washington Post </a>";
+            mOriginalLink = "https://www.washingtonpost.com/world/asia_pacific/north-korea-under-no-circumstances-will-give-up-its-nuclear-weapons/2017/08/07/33b8d319-fbb2-4559-8f7d-25e968913712_story.html?utm_term=.75977c5d6d8f";
+
+            mOriginalLinkText = "Washington Post";
             //noinspection deprecation
-            finalHolder.getOriginalLink().setText(Html.fromHtml(text));
+            finalHolder.getOriginalLink().setText(mOriginalLinkText);
         }
+
+        finalHolder.getOriginalLink().setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(mContext,WebViewActivity.class);
+                        intent.putExtra("LinkURL",mOriginalLink);
+                        intent.putExtra("LinkText",mOriginalLinkText);
+                        mContext.startActivity(intent);
+                    }
+                }
+        );
 
         String videoTitle = newsCard.getVideoTitle();
         if(videoTitle!=null){

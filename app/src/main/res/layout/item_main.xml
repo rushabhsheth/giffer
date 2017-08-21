@@ -76,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/gifferChannel"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/colorLink" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -105,7 +105,7 @@
                 android:id="@+id/originalLink"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/colorLink" />
 
         </LinearLayout>
 

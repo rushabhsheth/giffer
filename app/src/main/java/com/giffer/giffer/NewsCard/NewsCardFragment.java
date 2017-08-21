@@ -66,7 +66,7 @@ public class NewsCardFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.scrollToPosition(scrollPosition);
 
-        mNewsCardAdapter = new NewsCardAdapter(mNewsCardData);
+        mNewsCardAdapter = new NewsCardAdapter(getContext(),mNewsCardData);
         mRecyclerView.setAdapter(mNewsCardAdapter);
         SnapHelper snapHelper = new PagerSnapHelper();    // LinearSnapHelper();
         snapHelper.attachToRecyclerView(mRecyclerView);
