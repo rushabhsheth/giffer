@@ -41,11 +41,12 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
     private static final String TAG = "NewsCardAdapter";
 
     private List<NewsCard> mDataSet;
-    private int lastPosition = -1;
 
     Context mContext;
     String mOriginalLink;
     String mOriginalLinkText;
+
+    int lastPosition = -1;
 
     //Viewholder to hold item_main
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -219,7 +220,7 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        Log.d(TAG, "Element " + position + " set.");
+        //Log.d(TAG, "Element " + position + " set.");
 
         final ViewHolder finalHolder = viewHolder;
         Context context = finalHolder.itemView.getContext();
@@ -380,8 +381,6 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
         );
 
 
-        // setSlideUpAnimation(context, finalHolder.itemView, position);
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -407,21 +406,10 @@ public class NewsCardAdapter extends RecyclerView.Adapter<NewsCardAdapter.ViewHo
         holder.itemView.clearAnimation();
     }
 
-//    private void setSlideUpAnimation(Context context, View viewToAnimate, int position) {
-//        // If the bound view wasn't previously displayed on screen, it's animated
-//        if (position > lastPosition) {
-//            Animation animation = AnimationUtils.loadAnimation(context,R.anim.item_animation_slide_up);
-//            viewToAnimate.startAnimation(animation);
-//            lastPosition = position;
-//        }
-//        else
-//        {
-//            Animation animation = AnimationUtils.loadAnimation(context,R.anim.item_animation_slide_down);
-//            viewToAnimate.startAnimation(animation);
-//            lastPosition = position;
-//        }
-//    }
-//
+    @Override
+    public void onViewAttachedToWindow(ViewHolder holder) {
+       // setSlideUpAnimation(mContext, holder.itemView, holder.getAdapterPosition());
+    }
 
 }
 
