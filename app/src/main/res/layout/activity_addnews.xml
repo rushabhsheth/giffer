@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbaraddnews"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:theme="@style/AppTheme.NormalActionBar"
+        android:paddingRight="@dimen/toolbar_paddingRight"/>
+
+    <!-- Edit text box to paste URL -->
+    <EditText
+        android:id="@+id/addnews_editUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:hint="@string/url_textbox"
+        android:paddingBottom="5dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="5dp"
+        android:textColor="@color/colorText"
+        android:textSize="14sp"/>
+
+    <!--View for add News Image-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.50"
+        android:background="@color/videoRemainingBackground">
+
+        <ImageView
+            android:id="@+id/addNewsImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical" />
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/image_picker_background"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|right"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp"
+            android:src="@mipmap/white_square"
+            app:civ_border_color="#ffffff"
+            app:civ_border_width="1dp"
+            app:civ_fill_color="@color/colorPrimary" />
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/image_picker"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_gravity="bottom|right"
+            android:paddingBottom="15dp"
+            android:paddingRight="15dp"
+            android:src="@mipmap/image_picker"
+            app:civ_border_color="#D80027"
+            app:civ_border_width="1dp" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.50"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+
+        <EditText
+            android:id="@+id/addnews_editTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:hint="@string/news_title"
+            android:paddingBottom="0dp"
+            android:paddingTop="5dp"
+            android:textColor="@color/gifTitle"
+            android:textSize="16sp"/>
+
+        <!-- News Title Character count left-->
+        <LinearLayout
+            android:id="@+id/addnews_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="5dp"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/addnews_titlelength"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addnews_descriptionlength"
+                android:textColor="@color/colorText"
+                android:paddingLeft="0dp"
+                android:textSize="12sp"
+                android:paddingRight="0dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addnews_titletotalcount"
+                android:textColor="@color/colorText"
+                android:paddingLeft="0dp"
+                android:textSize="12sp"
+                android:paddingRight="0dp"/>
+
+
+        </LinearLayout>
+
+        <!--Thin line below Add News Title Edit box-->
+        <View
+            android:id="@+id/thinLine2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="#80c0c0c0" />
+
+        <!-- Add News Description Edit Box-->
+        <EditText
+            android:id="@+id/addnews_editDescription"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:hint="@string/news_description"
+            android:textColor="@color/gifDescription"
+            android:gravity="top"
+            android:textSize="14sp"
+            android:paddingTop="5dp" />
+
+        <!-- News Description Character count left-->
+        <LinearLayout
+            android:id="@+id/addnews_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/addnews_descriptionlength"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addnews_descriptionlength"
+                android:textColor="@color/colorText"
+                android:paddingLeft="0dp"
+                android:textSize="12sp"
+                android:paddingRight="0dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addnews_descriptiontotalcount"
+                android:textColor="@color/colorText"
+                android:paddingLeft="0dp"
+                android:textSize="12sp"
+                android:paddingRight="0dp"/>
+
+        </LinearLayout>
+
+        <!--Thin line below Add News Description Text box-->
+        <View
+            android:id="@+id/thinLine3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="#80c0c0c0" />
+
+        <!-- Add News Select Channel-->
+        <LinearLayout
+            android:id="@+id/addnews_selectchannel"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical">
+
+            <!--View for holding Profile Image-->
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                android:paddingBottom="0dp"
+                android:paddingTop="0dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/addnews_selectchannelLogo"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@mipmap/ic_launcher_round"
+                    app:civ_border_color="@color/colorPrimary"
+                    app:civ_border_width="0dp" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/addnews_selectchannelName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select_channel"
+                android:textColor="@color/colorText"
+                android:paddingLeft="5dp"
+                android:textSize="16sp"
+                android:paddingRight="5dp"/>
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@mipmap/dropdown"/>
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
